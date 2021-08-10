@@ -9,7 +9,7 @@ import com.bo.mower.lawnmover.models.Position;
 
 import java.util.List;
 
-public interface OrderService {
+public interface InstructionService {
 
     // Get lawn's information from input data
     String getLawnInfo(String inputData) throws BadFormatInputDataException, MissingDataException;
@@ -25,4 +25,5 @@ public interface OrderService {
 
     // Get orders from input data
     List<Order> getOrders(String inputData) throws BadFormatInputDataException, MissingDataException;
+
 }

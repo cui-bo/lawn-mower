@@ -19,7 +19,7 @@ import static com.bo.mower.lawnmover.utils.CustomConstants.*;
 
 @Service
 @Slf4j
-public class OrderServiceImpl implements OrderService {
+public class InstructionServiceImpl implements InstructionService {
 
     /**
      * Get lawn information from given file

@@ -6,7 +6,7 @@ import com.bo.mower.lawnmover.exceptions.BadFormatInputDataException;
 import com.bo.mower.lawnmover.exceptions.MissingDataException;
 import com.bo.mower.lawnmover.models.Lawn;
 import com.bo.mower.lawnmover.models.Position;
-import com.bo.mower.lawnmover.services.OrderServiceImpl;
+import com.bo.mower.lawnmover.services.InstructionServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +17,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-@SpringBootTest(classes = OrderServiceImpl.class)
+@SpringBootTest(classes = InstructionServiceImpl.class)
 class OderServiceImplTest {
     @Autowired
-    OrderServiceImpl orderService;
+    InstructionServiceImpl orderService;
 
     @DisplayName("test getLawnInfo when given empty parameter should throw exception")
     @Test

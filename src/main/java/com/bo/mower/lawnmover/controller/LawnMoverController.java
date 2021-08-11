@@ -4,6 +4,7 @@ import com.bo.mower.lawnmover.exceptions.BadFormatInputDataException;
 import com.bo.mower.lawnmover.exceptions.EntityNotFoundException;
 import com.bo.mower.lawnmover.exceptions.MissingDataException;
 import com.bo.mower.lawnmover.services.DataService;
+import com.bo.mower.lawnmover.services.InstructionService;
 import com.bo.mower.lawnmover.services.MoverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,9 @@ public class LawnMoverController {
     @Autowired
     private MoverService moverService;
 
+    @Autowired
+    private InstructionService instructionService;
+
     @GetMapping("/moverNumbers")
     public ResponseEntity<Integer> getMoverNumber() {
         try {
@@ -31,6 +35,16 @@ public class LawnMoverController {
             return ResponseEntity.ok().body(moverService.getMoverNumber(inputData));
         } catch (EntityNotFoundException | IOException | BadFormatInputDataException | MissingDataException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Mover numbers not found", ex);
+        }
+    }
+
+    @GetMapping("/lawnInfo")
+    public ResponseEntity<String> getLawnInfo() {
+        try {
+            String inputData = dataService.getDataFromFile("data.txt");
+            return ResponseEntity.ok().body(instructionService.getLawnInfo(inputData));
+        } catch (EntityNotFoundException | IOException | BadFormatInputDataException | MissingDataException ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lawn info not found", ex);
         }
     }
 }

@@ -6,6 +6,7 @@ import com.bo.mower.lawnmover.exceptions.MissingDataException;
 import com.bo.mower.lawnmover.services.DataService;
 import com.bo.mower.lawnmover.services.InstructionService;
 import com.bo.mower.lawnmover.services.MoverService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/v1/mover")
+@Api(value = "Lawn Mover Controller")
 public class LawnMoverController {
     @Autowired
     private DataService dataService;

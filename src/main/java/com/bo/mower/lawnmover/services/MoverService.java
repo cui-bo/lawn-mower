@@ -8,17 +8,17 @@ import com.bo.mower.lawnmover.models.Position;
 
 public interface MoverService {
 
-    void launch();
+    String launch(String inputData) throws MissingDataException;
 
     Position startMover();
 
     Orientation calculateOrientation();
 
-    Boolean isMoverBlocked();
+    // Checking if mover is on the edge of the lawn
+    Boolean canMoverForward(Position position, Orientation orientation);
 
+    String displayFinalPosition();
 
-    // Get movers' number
-    Integer getMoverNumber(String inputData) throws BadFormatInputDataException, MissingDataException;
 
 
 

@@ -30,11 +30,22 @@ public class LawnMoverController {
     @Autowired
     private InstructionService instructionService;
 
+
+    @GetMapping("/launch")
+    public ResponseEntity<String> launch() {
+        try {
+            String inputData = dataService.getDataFromFile("data.txt");
+            return ResponseEntity.ok().body(moverService.launch(inputData));
+        } catch (EntityNotFoundException | IOException | MissingDataException ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Failed to launch movers", ex);
+        }
+    }
+
     @GetMapping("/moverNumbers")
     public ResponseEntity<Integer> getMoverNumber() {
         try {
             String inputData = dataService.getDataFromFile("data.txt");
-            return ResponseEntity.ok().body(moverService.getMoverNumber(inputData));
+            return ResponseEntity.ok().body(instructionService.getMoverNumber(inputData));
         } catch (EntityNotFoundException | IOException | BadFormatInputDataException | MissingDataException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Mover numbers not found", ex);
         }

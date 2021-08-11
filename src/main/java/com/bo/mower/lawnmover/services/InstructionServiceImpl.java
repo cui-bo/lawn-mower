@@ -5,6 +5,7 @@ import com.bo.mower.lawnmover.enums.Orientation;
 import com.bo.mower.lawnmover.exceptions.BadFormatInputDataException;
 import com.bo.mower.lawnmover.exceptions.MissingDataException;
 import com.bo.mower.lawnmover.models.Lawn;
+import com.bo.mower.lawnmover.models.Mover;
 import com.bo.mower.lawnmover.models.Position;
 import com.bo.mower.lawnmover.utils.CustomConstants;
 import lombok.extern.slf4j.Slf4j;
@@ -216,5 +217,47 @@ public class InstructionServiceImpl implements InstructionService {
         return orders;
     }
 
+    @Override
+    public Integer getMoverNumber(String inputData) throws MissingDataException {
+        if (StringUtils.isBlank(inputData)) {
+            throw new MissingDataException("[InstructionService][getMoverNumber] Missing input data");
+        }
+
+        int lineSepNumbers = StringUtils.countMatches(inputData, LINE_SEPARATOR);
+
+        return (int) Math.ceil(lineSepNumbers >> 1);
+    }
+
+    /**
+     * Get
+     *
+     * example of input data :
+     *      * GAGAA
+     * @param inputData -
+     * @return
+     * @throws MissingDataException
+     * @throws BadFormatInputDataException
+     */
+    @Override
+    public List<Mover> getMovers(String inputData) throws MissingDataException, BadFormatInputDataException {
+        if (StringUtils.isBlank(inputData)) {
+            throw new MissingDataException("[InstructionService][getMovers] Missing input data");
+        }
+
+        List<Mover> movers = new ArrayList<>();
+
+        String[] inputLines = inputData.split(CustomConstants.LINE_SEPARATOR);
+
+        for (int i = 1; i < inputLines.length; i = i+2) {
+            Mover mover = Mover.builder()
+                    .position(getMoverInitPosition(inputLines[i]))
+                    .orientation(getMoverInitOrientation(inputLines[i]))
+                    .orders(getOrders(inputLines[i+1]))
+                    .build();
+            movers.add(mover);
+        }
+
+        return movers;
+    }
 
 }

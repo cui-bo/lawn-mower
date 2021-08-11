@@ -5,6 +5,7 @@ import com.bo.mower.lawnmover.enums.Orientation;
 import com.bo.mower.lawnmover.exceptions.BadFormatInputDataException;
 import com.bo.mower.lawnmover.exceptions.MissingDataException;
 import com.bo.mower.lawnmover.models.Lawn;
+import com.bo.mower.lawnmover.models.Mover;
 import com.bo.mower.lawnmover.models.Position;
 import com.bo.mower.lawnmover.services.InstructionServiceImpl;
 import org.junit.jupiter.api.DisplayName;
@@ -18,15 +19,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @SpringBootTest(classes = InstructionServiceImpl.class)
-class OderServiceImplTest {
+class InstructionServiceImplTest {
     @Autowired
-    InstructionServiceImpl orderService;
+    InstructionServiceImpl instructionService;
 
     @DisplayName("test getLawnInfo when given empty parameter should throw exception")
     @Test
     void getLawnInfoTest1() {
         try {
-            orderService.getLawnInfo("");
+            instructionService.getLawnInfo("");
         } catch (MissingDataException e) {
             assertEquals("[OrderServiceImpl][getLawnInfo] No input data", e.getMessage());
         } catch (BadFormatInputDataException e) {
@@ -37,14 +38,14 @@ class OderServiceImplTest {
     @DisplayName("test getLawnInfo when given good parameter should return lawn information")
     @Test
     void getLawnInfoTest2() throws BadFormatInputDataException, MissingDataException {
-        assertEquals("5 5", orderService.getLawnInfo("5 5\n1 2 N\nGAGAGAGAA\n3 3 E\nAADAADADDA"));
+        assertEquals("5 5", instructionService.getLawnInfo("5 5\n1 2 N\nGAGAGAGAA\n3 3 E\nAADAADADDA"));
     }
 
     @DisplayName("test getLawnInfo when given bad parameter should throw exception")
     @Test
     void getLawnInfoTest3() {
         try {
-            orderService.getLawnInfo("5 5 1 2 N");
+            instructionService.getLawnInfo("5 5 1 2 N");
         } catch (BadFormatInputDataException e) {
             assertEquals("[OrderServiceImpl][getLawnInfo] bad format input data", e.getMessage());
         } catch (MissingDataException e) {
@@ -56,7 +57,7 @@ class OderServiceImplTest {
     @Test
     void getLawnInfoTest4() {
         try {
-            orderService.getLawnInfo("\n1 2 N");
+            instructionService.getLawnInfo("\n1 2 N");
         } catch (BadFormatInputDataException e) {
             assertEquals("[OrderServiceImpl][getLawnInfo] found empty string for lawn", e.getMessage());
         } catch (MissingDataException e) {
@@ -68,7 +69,7 @@ class OderServiceImplTest {
     @Test
     void getLawnSizeTest1() {
         try {
-            orderService.getLawnSize("");
+            instructionService.getLawnSize("");
         } catch (MissingDataException e) {
             assertEquals("[OrderServiceImpl][getLawnSize] No input data", e.getMessage());
         } catch (BadFormatInputDataException e) {
@@ -80,7 +81,7 @@ class OderServiceImplTest {
     @Test
     void getLawnSizeTest2() {
         try {
-            orderService.getLawnSize(" 5");
+            instructionService.getLawnSize(" 5");
         } catch (BadFormatInputDataException e) {
             assertEquals("[OrderServiceImpl][getLawnSize] cannot find lawn size", e.getMessage());
         } catch (MissingDataException e) {
@@ -92,7 +93,7 @@ class OderServiceImplTest {
     @Test
     void getLawnSizeTest3() {
         try {
-            orderService.getLawnSize("5 ");
+            instructionService.getLawnSize("5 ");
         } catch (BadFormatInputDataException e) {
             assertEquals("[OrderServiceImpl][getLawnSize] cannot find lawn size", e.getMessage());
         } catch (MissingDataException e) {
@@ -104,7 +105,7 @@ class OderServiceImplTest {
     @Test
     void getLawnSizeTest4() {
         try {
-            orderService.getLawnSize("55");
+            instructionService.getLawnSize("55");
         } catch (BadFormatInputDataException e) {
             assertEquals("[OrderServiceImpl][getLawnSize] bad format input data", e.getMessage());
         } catch (MissingDataException e) {
@@ -116,7 +117,7 @@ class OderServiceImplTest {
     @Test
     void getLawnSizeTest5() {
         try {
-            Lawn result = orderService.getLawnSize("5 5");
+            Lawn result = instructionService.getLawnSize("5 5");
             assertEquals(5, result.getWidth());
             assertEquals(5, result.getHeight());
         } catch (BadFormatInputDataException | MissingDataException e) {
@@ -128,7 +129,7 @@ class OderServiceImplTest {
     @Test
     void getMoverInitPositionTest1() {
         try {
-            orderService.getMoverInitPosition("");
+            instructionService.getMoverInitPosition("");
         } catch (MissingDataException e) {
             assertEquals("[OrderServiceImpl][getMoverInitPosition] No input data", e.getMessage());
         } catch (BadFormatInputDataException e) {
@@ -140,7 +141,7 @@ class OderServiceImplTest {
     @Test
     void getMoverInitPositionTest2() {
         try {
-            orderService.getMoverInitPosition(" 5 N");
+            instructionService.getMoverInitPosition(" 5 N");
         } catch (BadFormatInputDataException e) {
             assertEquals("[OrderServiceImpl][getMoverInitPosition] cannot find position", e.getMessage());
         } catch (MissingDataException e) {
@@ -152,7 +153,7 @@ class OderServiceImplTest {
     @Test
     void getMoverInitPositionTest3() {
         try {
-            orderService.getMoverInitPosition("5  N");
+            instructionService.getMoverInitPosition("5  N");
         } catch (BadFormatInputDataException e) {
             assertEquals("[OrderServiceImpl][getMoverInitPosition] cannot find position", e.getMessage());
         } catch (MissingDataException e) {
@@ -164,7 +165,7 @@ class OderServiceImplTest {
     @Test
     void getMoverInitPositionTest4() {
         try {
-            orderService.getMoverInitPosition("55N");
+            instructionService.getMoverInitPosition("55N");
         } catch (BadFormatInputDataException e) {
             assertEquals("[OrderServiceImpl][getMoverInitPosition] bad format input data", e.getMessage());
         } catch (MissingDataException e) {
@@ -176,7 +177,7 @@ class OderServiceImplTest {
     @Test
     void getMoverInitPositionTest5() {
         try {
-            Position result = orderService.getMoverInitPosition("5 5 N");
+            Position result = instructionService.getMoverInitPosition("5 5 N");
             assertEquals(5, result.getX());
             assertEquals(5, result.getY());
         } catch (BadFormatInputDataException | MissingDataException e) {
@@ -188,7 +189,7 @@ class OderServiceImplTest {
     @Test
     void getMoverInitOrientationTest1() {
         try {
-            orderService.getMoverInitOrientation("");
+            instructionService.getMoverInitOrientation("");
         } catch (MissingDataException e) {
             assertEquals("[OrderServiceImpl][getMoverInitOrientation] No input data", e.getMessage());
         } catch (BadFormatInputDataException e) {
@@ -200,7 +201,7 @@ class OderServiceImplTest {
     @Test
     void getMoverInitOrientationTest2() {
         try {
-            orderService.getMoverInitOrientation(" 5 N");
+            instructionService.getMoverInitOrientation(" 5 N");
         } catch (BadFormatInputDataException e) {
             assertEquals("[OrderServiceImpl][getMoverInitOrientation] cannot find position", e.getMessage());
         } catch (MissingDataException e) {
@@ -212,7 +213,7 @@ class OderServiceImplTest {
     @Test
     void getMoverInitOrientationTest3() {
         try {
-            orderService.getMoverInitOrientation("5  N");
+            instructionService.getMoverInitOrientation("5  N");
         } catch (BadFormatInputDataException e) {
             assertEquals("[OrderServiceImpl][getMoverInitOrientation] cannot find position", e.getMessage());
         } catch (MissingDataException e) {
@@ -224,7 +225,7 @@ class OderServiceImplTest {
     @Test
     void getMoverInitOrientationTest4() {
         try {
-            orderService.getMoverInitOrientation("55N");
+            instructionService.getMoverInitOrientation("55N");
         } catch (BadFormatInputDataException e) {
             assertEquals("[OrderServiceImpl][getMoverInitOrientation] bad format input data", e.getMessage());
         } catch (MissingDataException e) {
@@ -236,7 +237,7 @@ class OderServiceImplTest {
     @Test
     void getMoverInitOrientationTest5() {
         try {
-            Orientation result = orderService.getMoverInitOrientation("5 5 N");
+            Orientation result = instructionService.getMoverInitOrientation("5 5 N");
             assertEquals("NORTH", result.getLabel());
         } catch (BadFormatInputDataException | MissingDataException e) {
             fail();
@@ -247,7 +248,7 @@ class OderServiceImplTest {
     @Test
     void getOrdersTest1() {
         try {
-            orderService.getOrders("");
+            instructionService.getOrders("");
         } catch (MissingDataException e) {
             assertEquals("[OrderServiceImpl][getOrders] Missing input data", e.getMessage());
         } catch (Exception e) {
@@ -259,7 +260,7 @@ class OderServiceImplTest {
     @Test
     void getOrdersTest2() {
         try {
-            orderService.getOrders("5GA");
+            instructionService.getOrders("5GA");
         } catch (BadFormatInputDataException e) {
             assertEquals("[OrderServiceImpl][getOrders] Bad format input data", e.getMessage());
         } catch (Exception e) {
@@ -271,7 +272,7 @@ class OderServiceImplTest {
     @Test
     void getOrdersTest3() {
         try {
-            List<Order> result = orderService.getOrders("GADA");
+            List<Order> result = instructionService.getOrders("GADA");
             assertEquals("GAUCHE", result.get(0).getLabel());
             assertEquals(-90, result.get(0).getAngle());
             assertEquals("AVANCER", result.get(1).getLabel());
@@ -281,6 +282,82 @@ class OderServiceImplTest {
             assertEquals("AVANCER", result.get(3).getLabel());
             assertEquals(0, result.get(3).getAngle());
         } catch (BadFormatInputDataException | MissingDataException e) {
+            fail();
+        }
+    }
+
+
+    @DisplayName("test getMoverNumber without input data")
+    @Test
+    void getMoverNumberTest1() {
+        try {
+            instructionService.getMoverNumber("");
+        } catch (MissingDataException e) {
+            assertEquals("[InstructionService][getMoverNumber] Missing input data", e.getMessage());
+        }
+    }
+
+    @DisplayName("test getMoverNumber with input data finished by \n")
+    @Test
+    void getMoverNumberTest2() {
+        try {
+            Integer result = instructionService.getMoverNumber("5 5\n1 1 N\nGADAGA\n2 2 N\nGADAGA\n");
+            assertEquals(2, result);
+        } catch (MissingDataException e) {
+            fail();
+        }
+    }
+
+    @DisplayName("test getMoverNumber with input data not finished by \n")
+    @Test
+    void getMoverNumberTest3() {
+        try {
+            Integer result = instructionService.getMoverNumber("5 5\n1 1 N\nGADAGA\n1 1 N\nGADAGA");
+            assertEquals(2, result);
+        } catch (MissingDataException e) {
+            fail();
+        }
+    }
+
+    @DisplayName("test getMovers without input data")
+    @Test
+    void getMoversTest1() {
+        try {
+            instructionService.getMovers("");
+        } catch (MissingDataException e) {
+            assertEquals("[InstructionService][getMovers] Missing input data", e.getMessage());
+        } catch (BadFormatInputDataException e) {
+            fail();
+        }
+    }
+
+    @DisplayName("test getMovers with good input data should return 2 movers")
+    @Test
+    void getMoversTest2() {
+        try {
+            List<Mover> movers = instructionService.getMovers("5 5\n1 1 N\nGADAGA\n2 2 E\nGADAGA\n");
+            assertEquals(2, movers.size());
+            assertEquals(1, movers.get(0).getPosition().getX());
+            assertEquals(1, movers.get(0).getPosition().getY());
+            assertEquals(Orientation.N, movers.get(0).getOrientation());
+            assertEquals(Order.G, movers.get(0).getOrders().get(0));
+            assertEquals(Order.A, movers.get(0).getOrders().get(1));
+            assertEquals(Order.D, movers.get(0).getOrders().get(2));
+            assertEquals(Order.A, movers.get(0).getOrders().get(3));
+            assertEquals(Order.G, movers.get(0).getOrders().get(4));
+            assertEquals(Order.A, movers.get(0).getOrders().get(5));
+
+            assertEquals(2, movers.get(1).getPosition().getX());
+            assertEquals(2, movers.get(1).getPosition().getY());
+            assertEquals(Orientation.E, movers.get(1).getOrientation());
+            assertEquals(Order.G, movers.get(1).getOrders().get(0));
+            assertEquals(Order.A, movers.get(1).getOrders().get(1));
+            assertEquals(Order.D, movers.get(1).getOrders().get(2));
+            assertEquals(Order.A, movers.get(1).getOrders().get(3));
+            assertEquals(Order.G, movers.get(1).getOrders().get(4));
+            assertEquals(Order.A, movers.get(1).getOrders().get(5));
+
+        } catch (MissingDataException | BadFormatInputDataException e) {
             fail();
         }
     }

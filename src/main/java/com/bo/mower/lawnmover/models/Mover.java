@@ -1,6 +1,10 @@
 package com.bo.mower.lawnmover.models;
 
+import com.bo.mower.lawnmover.enums.Order;
+import com.bo.mower.lawnmover.enums.Orientation;
 import lombok.*;
+
+import java.util.List;
 
 @Data
 @Getter
@@ -9,8 +13,9 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class Mover {
-    private String idMover;
-    private int xLimit;
-    private int yLimit;
+//    private int xLimit;
+//    private int yLimit;
     private Position position;
+    Orientation orientation;
+    List<Order> orders;
 }

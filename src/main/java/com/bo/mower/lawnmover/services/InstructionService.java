@@ -5,6 +5,7 @@ import com.bo.mower.lawnmover.enums.Orientation;
 import com.bo.mower.lawnmover.exceptions.BadFormatInputDataException;
 import com.bo.mower.lawnmover.exceptions.MissingDataException;
 import com.bo.mower.lawnmover.models.Lawn;
+import com.bo.mower.lawnmover.models.Mover;
 import com.bo.mower.lawnmover.models.Position;
 
 import java.util.List;
@@ -26,4 +27,9 @@ public interface InstructionService {
     // Get orders from input data
     List<Order> getOrders(String inputData) throws BadFormatInputDataException, MissingDataException;
 
+    // Get movers' number
+    Integer getMoverNumber(String inputData) throws BadFormatInputDataException, MissingDataException;
+
+    // Get movers
+    List<Mover> getMovers(String inputData) throws BadFormatInputDataException, MissingDataException;
 }

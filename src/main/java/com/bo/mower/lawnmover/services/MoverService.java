@@ -2,8 +2,8 @@ package com.bo.mower.lawnmover.services;
 
 
 import com.bo.mower.lawnmover.enums.Orientation;
-import com.bo.mower.lawnmover.exceptions.BadFormatInputDataException;
 import com.bo.mower.lawnmover.exceptions.MissingDataException;
+import com.bo.mower.lawnmover.models.Lawn;
 import com.bo.mower.lawnmover.models.Position;
 
 public interface MoverService {
@@ -15,12 +15,9 @@ public interface MoverService {
     Orientation calculateOrientation();
 
     // Checking if mover is on the edge of the lawn
-    Boolean canMoverForward(Position position, Orientation orientation);
+    Boolean canMoverForward(Lawn lawn, Position position, Orientation orientation) throws MissingDataException;
 
     String displayFinalPosition();
-
-
-
 
 
 }

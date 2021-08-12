@@ -2,6 +2,7 @@ package com.bo.mower.lawnmover.services;
 
 import com.bo.mower.lawnmover.enums.Orientation;
 import com.bo.mower.lawnmover.exceptions.MissingDataException;
+import com.bo.mower.lawnmover.models.Lawn;
 import com.bo.mower.lawnmover.models.Position;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -18,9 +19,15 @@ public class MoverServiceImpl implements MoverService {
     public String launch(String inputData) throws MissingDataException {
 
 
+        // Get lawn
 
+        // Get movers
 
+        // Execute orders by each mover
 
+        // Check if mover can forward
+
+        // Print final position of mover
 
         return "";
     }
@@ -37,14 +44,16 @@ public class MoverServiceImpl implements MoverService {
     }
 
     @Override
-    public Boolean canMoverForward(Position position, Orientation orientation) {
-        if (null == position || null == orientation) {
-            log.warn("[MoverService][isMoverBlocked] Missing parameters");
-            return false;
+    public Boolean canMoverForward(Lawn lawn, Position position, Orientation orientation) throws MissingDataException {
+        if (null == lawn || null == position || null == orientation) {
+            throw new MissingDataException("[MoverService][canMoverForward] Missing parameters");
         }
 
         return (position.getX() == 0 && StringUtils.equalsIgnoreCase(orientation.getLabel(), Orientation.W.getLabel()))
-                || (position.getY() == 0 && StringUtils.equalsIgnoreCase(orientation.getLabel(), Orientation.S.getLabel()));
+                || (position.getY() == 0 && StringUtils.equalsIgnoreCase(orientation.getLabel(), Orientation.S.getLabel()))
+                || (position.getX() == lawn.getWidth() && StringUtils.equalsIgnoreCase(orientation.getLabel(), Orientation.E.getLabel())
+                || (position.getY() == lawn.getHeight() && StringUtils.equalsIgnoreCase(orientation.getLabel(), Orientation.N.getLabel()))
+        );
     }
 
     @Override

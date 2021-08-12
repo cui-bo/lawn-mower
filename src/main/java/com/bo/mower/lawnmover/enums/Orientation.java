@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public enum  Orientation {
+public enum Orientation {
     N("NORTH", 0), E("EAST", 90), W("WEST", 270), S("SOUTH", 180);
 
     private String label;

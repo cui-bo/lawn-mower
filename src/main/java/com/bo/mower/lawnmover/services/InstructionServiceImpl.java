@@ -155,16 +155,50 @@ public class InstructionServiceImpl implements InstructionService {
         }
 
         switch (fields[2]) {
-            case ORIENTATION_NORTH:
+            case ORIENTATION_NORTH_INIT:
                 return Orientation.N;
-            case ORIENTATION_SOUTH:
+            case ORIENTATION_SOUTH_INIT:
                 return Orientation.S;
-            case ORIENTATION_EAST:
+            case ORIENTATION_EAST_INIT:
                 return Orientation.E;
-            case ORIENTATION_WEST:
+            case ORIENTATION_WEST_INIT:
                 return Orientation.W;
             default:
                 return null;
+        }
+    }
+
+
+    /**
+     * TODO : TU
+     *
+     * Transform Orientation object to string letter
+     * ex.
+     * <p>
+     * given Orientation object ORIENTATION_EAST
+     * <p>
+     * will return ORIENTATION_EAST_INIT
+     *
+     * @param orientation - Orientation
+     * @return - String
+     */
+    @Override
+    public String transformOrientationToStr(Orientation orientation) {
+        if (null == orientation) {
+            log.info("[OrderServiceImpl][getStrByOrientation] Missing given orientation");
+            return StringUtils.EMPTY;
+        }
+        switch (orientation.getLabel()) {
+            case ORIENTATION_EAST:
+                return ORIENTATION_EAST_INIT;
+            case ORIENTATION_NORTH:
+                return ORIENTATION_NORTH_INIT;
+            case ORIENTATION_SOUTH:
+                return ORIENTATION_SOUTH_INIT;
+            case ORIENTATION_WEST:
+                return ORIENTATION_WEST_INIT;
+            default:
+                return StringUtils.EMPTY;
         }
     }
 
@@ -230,9 +264,10 @@ public class InstructionServiceImpl implements InstructionService {
 
     /**
      * Get
-     *
+     * <p>
      * example of input data :
-     *      * GAGAA
+     * * GAGAA
+     *
      * @param inputData -
      * @return
      * @throws MissingDataException
@@ -248,11 +283,11 @@ public class InstructionServiceImpl implements InstructionService {
 
         String[] inputLines = inputData.split(CustomConstants.LINE_SEPARATOR);
 
-        for (int i = 1; i < inputLines.length; i = i+2) {
+        for (int i = 1; i < inputLines.length; i = i + 2) {
             Mover mover = Mover.builder()
                     .position(getMoverInitPosition(inputLines[i]))
                     .orientation(getMoverInitOrientation(inputLines[i]))
-                    .orders(getOrders(inputLines[i+1]))
+                    .orders(getOrders(inputLines[i + 1]))
                     .build();
             movers.add(mover);
         }

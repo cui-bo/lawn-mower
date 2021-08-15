@@ -24,6 +24,9 @@ public interface InstructionService {
     // Get mover initial orientation
     Orientation getMoverInitOrientation(String inputData) throws BadFormatInputDataException, MissingDataException;
 
+    // Return Orientation string by given Orientation object
+    String transformOrientationToStr(Orientation orientation);
+
     // Get orders from input data
     List<Order> getOrders(String inputData) throws BadFormatInputDataException, MissingDataException;
 

@@ -11,7 +11,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 @Slf4j
@@ -29,16 +31,22 @@ public class MoverServiceImpl implements MoverService {
         // Get movers
         List<Mover> movers = instructionService.getMovers(inputData);
 
+        List<String> outputStrList = new ArrayList<>();
+
         // Execute orders by each mover
         movers.forEach(mover -> {
             for (int i = 0; i < mover.getOrders().size(); i++) {
                 try {
                     if (canMoverForward(lawn, mover.getPosition(), mover.getOrientation())) {
+                        log.info("[MoverService][launch] Mover will forward");
                         // update mover's position and orientation
+                        // TODO
                         updateMover(mover, calculatePosition(), calculateOrientation());
-                        // print
                         if(i == mover.getOrders().size()-1) {
-                            printFinalStatus(mover);
+                            // get mover's final position
+                            String moverFinalPosition = printFinalStatus(mover);
+                            // we could print mover's final position here or at the end of function or in the controller
+                            outputStrList.add(moverFinalPosition);
                         }
                     }
                 } catch (MissingDataException e) {
@@ -47,11 +55,8 @@ public class MoverServiceImpl implements MoverService {
             }
         });
 
-        // Check if mover can forward
-
         // Print final position of mover
-
-        return "";
+        return String.join("\n", outputStrList);
     }
 
     @Override
@@ -76,10 +81,10 @@ public class MoverServiceImpl implements MoverService {
             throw new MissingDataException("[MoverService][canMoverForward] Missing parameters");
         }
 
-        return (position.getX() == 0 && StringUtils.equalsIgnoreCase(orientation.getLabel(), Orientation.W.getLabel()))
+        return !((position.getX() == 0 && StringUtils.equalsIgnoreCase(orientation.getLabel(), Orientation.W.getLabel()))
                 || (position.getY() == 0 && StringUtils.equalsIgnoreCase(orientation.getLabel(), Orientation.S.getLabel()))
                 || (position.getX() == lawn.getWidth() && StringUtils.equalsIgnoreCase(orientation.getLabel(), Orientation.E.getLabel())
-                || (position.getY() == lawn.getHeight() && StringUtils.equalsIgnoreCase(orientation.getLabel(), Orientation.N.getLabel()))
+                || (position.getY() == lawn.getHeight() && StringUtils.equalsIgnoreCase(orientation.getLabel(), Orientation.N.getLabel())))
         );
     }
 

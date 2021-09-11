@@ -1,8 +1,7 @@
-package com.bo.mower.lawnmover.services;
+package com.bo.mower.lawnmover.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;
@@ -12,9 +11,8 @@ import java.nio.file.Path;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Service
 @Slf4j
-public class DataServiceImpl implements DataService {
+public class DataReaderUtils {
 
     /**
      * Get data from file
@@ -23,7 +21,7 @@ public class DataServiceImpl implements DataService {
      * @return - file content in string separated by \n
      * @throws IOException
      */
-    public String getDataFromFile(String filename) throws IOException {
+    public static String getDataFromFile(String filename) throws IOException {
 
         String fileContent;
 
@@ -49,9 +47,7 @@ public class DataServiceImpl implements DataService {
      * @return
      * @throws IOException
      */
-    @Override
-    public String getDataFromDB() throws IOException {
+    public static String getDataFromDB() throws IOException {
         return null;
     }
-
 }
